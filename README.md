@@ -7,6 +7,8 @@ Execute below given command to run the code with `input.csv` as an argument and 
 node cli.js input.csv > output.csv
 ```
 
+> **Note: In order to override the code, make sure to run `tsc cli.ts` before running above command.**
+
 ## Testing
 Run below given command for the unit testing.
 ```
