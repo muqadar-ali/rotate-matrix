@@ -11,8 +11,13 @@ export class Matrix {
         this.isValid=false;
         
         const n = data.length;
-        if(n>2 || !this._isPrimeButGreaterThan2(n)){
-            // handle 1x1, 1x2 and nxm matrix
+        if(n==1){ // 1x1 matrix
+            this.data=[data];
+            this.rows=1;
+            this.cols=1;
+            this.isValid=true;
+        }else if(n>2 || !this._isPrimeButGreaterThan2(n)){
+            // handle 1x1, 1x2 and nxm matrix 
             this.rows = Math.sqrt(n); 
             this.cols = n / this.rows;
     
@@ -41,40 +46,40 @@ export class Matrix {
 
     rotateLeft(){
         if(this.isValid){
-          let rounds: number = Math.floor(this.rows/2);
-          let r:number=this.data[0].length-1;
-          let matrix = this.data.slice();
-          for(let i=0;i<rounds;i++){
-            let topLeftItem =  matrix[i][i];
-      
-            // top <----
-            for(let j=i; j<=r-1; j++){
-              matrix[i][j]=matrix[i][j+1];
+            let matrix = this.data.slice();
+            if(this.rows >= 1 || this.cols > 1){
+                let rounds: number = Math.floor(this.rows/2);
+                let r:number=this.data[0].length-1;
+                for(let i=0;i<rounds;i++){
+                  let topLeftItem =  matrix[i][i];
+            
+                  // top <----
+                  for(let j=i; j<=r-1; j++){
+                    matrix[i][j]=matrix[i][j+1];
+                  }
+                
+                  /* right 
+                     ^
+                     |
+                     | 
+                  */
+                  for(let j=i; j<=r-1; j++){
+                    matrix[j][r]=matrix[j+1][r];
+                  }
+            
+                  // bottom ---->
+                  for(let j=r; j>0; j--){
+                    matrix[r][j]=matrix[r][j-1];
+                  }
+            
+                  // left
+                  for(let j=r; j>0; j--){
+                    matrix[j][i]=matrix[j-1][i];
+                  }
+                  matrix[i+1][i]=topLeftItem;     
+                  r--;
+                }
             }
-          
-            /* right 
-               ^
-               |
-               | 
-            */
-            for(let j=i; j<=r-1; j++){
-              matrix[j][r]=matrix[j+1][r];
-            }
-      
-            // bottom ---->
-            for(let j=r; j>0; j--){
-              matrix[r][j]=matrix[r][j-1];
-            }
-      
-            // left
-            for(let j=r; j>0; j--){
-              matrix[j][i]=matrix[j-1][i];
-            }
-            matrix[i+1][i]=topLeftItem;     
-            r--;
-          }
-          
-          return {isValid: this.isValid,data: matrix.flat()}
         }
         // false
         return {isValid: this.isValid,data: this.data.flat()}
