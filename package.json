@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "npx nodemon",
+    "dev": "tsc cli.ts && node cli.js input.csv > output.csv",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
